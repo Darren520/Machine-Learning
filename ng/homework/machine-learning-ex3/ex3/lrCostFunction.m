@@ -28,7 +28,7 @@ grad = zeros(size(theta));
 %       the cost function and gradient computations. 
 %
 % Hint: When computing the gradient of the regularized cost function, 
-%       there're many possible vectorized solutions, but one solution
+%       there're many possible vectorized solutions, but one solutionrand
 %       looks like:
 %           grad = (unregularized gradient for logistic regression)
 %           temp = theta; 
@@ -36,12 +36,16 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+lambda_theta = theta;
+lambda_theta(1) = 0; %设置第一个项为0，用来做正则化
 
+%为什么是X*theta，参照ex3.pdf page4~5
+%J = (-1/m)*sum(y.*log(sigmoid(X*theta)) +(1 - y).*log(1-sigmoid(X*theta))) + 
 
-
-
-
-
+%(lambda/2m)*(lambda_theta'.^2);
+%lambda/(2*m) 不能写成lambda/2*m  是不一样的值，犯下的错误 注意
+J = (-1/m)*sum( y.*log(sigmoid(X*theta)) + (1-y).*log(1-sigmoid(X*theta)) ) +(lambda/(2*m))*sum(lambda_theta.^2);  
+grad =(1/m )*(X'*(sigmoid(X*theta) - y ))+ (lambda/m)*lambda_theta;
 
 
 
