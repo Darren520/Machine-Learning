@@ -44,8 +44,9 @@ lambda_theta(1) = 0; %设置第一个项为0，用来做正则化
 
 %(lambda/2m)*(lambda_theta'.^2);
 %lambda/(2*m) 不能写成lambda/2*m  是不一样的值，犯下的错误 注意
-J = (-1/m)*sum( y.*log(sigmoid(X*theta)) + (1-y).*log(1-sigmoid(X*theta)) ) +(lambda/(2*m))*sum(lambda_theta.^2);  
-grad =(1/m )*(X'*(sigmoid(X*theta) - y ))+ (lambda/m)*lambda_theta;
+h = sigmoid(X * theta);%优化h取值
+J = (-1/m)*sum( y.*log(h) + (1-y).*log(1-h) ) +(lambda/(2*m))*sum(lambda_theta.^2);  
+grad =(1/m )*(X'*(h - y ))+ (lambda/m)*lambda_theta;
 
 
 
