@@ -14,7 +14,8 @@ J = 0;
 %               You should set J to the cost.
 
 
-
+h = X*theta;% h 不是一个标量（not a scarlar values)
+J = 1/(2*m)*sum( (h - y).^2 );
 
 
 % =========================================================================
