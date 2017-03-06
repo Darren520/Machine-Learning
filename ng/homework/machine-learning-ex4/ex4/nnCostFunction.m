@@ -93,7 +93,14 @@ J = sum(sum((-Y).*log(h) - (1-Y).*log(1-h), 2))/m;
 % calculte penalty
 p = sum(sum(Theta1(:, 2:end).^2, 2))+sum(sum(Theta2(:, 2:end).^2, 2));
 J = J  + lambda*p/(2*m);
+
 % Part 2: 
+
+delta_1 = zeros(size(Theta1));
+delta_2 = zeros(size(Theta2));
+for i=1:m
+  
+end
 
 
 % -------------------------------------------------------------
