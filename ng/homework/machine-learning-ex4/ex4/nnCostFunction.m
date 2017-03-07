@@ -96,11 +96,37 @@ J = J  + lambda*p/(2*m);
 
 % Part 2: 
 
+%% 计算 Gradient 
 delta_1 = zeros(size(Theta1));
 delta_2 = zeros(size(Theta2));
-for i=1:m
-  
+
+for t = 1:m
+   % step 1
+   a_1 = X(t,:)';          
+   a_1 = [1 ; a_1];
+   z_2 = Theta1 * a_1;   
+   a_2 = sigmoid(z_2);  
+   a_2 = [1 ; a_2];
+   z_3 = Theta2 * a_2;
+   a_3 = sigmoid(z_3);
+   % step 2
+   err_3 = zeros(num_labels,1);
+   for k = 1:num_labels     
+      err_3(k) = a_3(k) - (y(t) == k);
+   end
+   % step 3
+   err_2 = Theta2' * err_3;                % err_2有26行！！！
+   err_2 = err_2(2:end) .* sigmoidGradient(z_2);   % 去掉第一个误差值，减少为25. sigmoidGradient(z_2)只有25行！！！
+   % step 4
+   delta_2 = delta_2 + err_3 * a_2';
+   delta_1 = delta_1 + err_2 * a_1';
 end
+
+% step 5
+Theta1_temp = [zeros(size(Theta1,1),1) Theta1(:,2:end)];
+Theta2_temp = [zeros(size(Theta2,1),1) Theta2(:,2:end)];
+Theta1_grad = 1 / m * delta_1 + lambda/m * Theta1_temp;
+Theta2_grad = 1 / m * delta_2 + lambda/m * Theta2_temp ;
 
 
 % -------------------------------------------------------------
